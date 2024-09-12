@@ -39,7 +39,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            mkdir -p stock-ticker2.0/server
+            
             echo "STOCK_API_KEY=${{ secrets.STOCK_API_KEY }}" > stock-ticker2.0/server/.env
 
             cat stock-ticker2.0/server/.env
