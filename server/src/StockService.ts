@@ -36,11 +36,10 @@ const publishStockPrice = async (symbols: string[]) => {
     console.error(`Error fetching stock price: ${error}`);
   }
 };
-cron.schedule("* * * * *", () => {
-  console.log("Running a task every  minute");
+cron.schedule("*/10 * * * *", () => {
+  console.log("Running a task every 10 minutes");
   publishStockPrice(stockList);
 });
-
 
 function formatAMPM(date: Date) {
   let hours = date.getUTCHours(); 

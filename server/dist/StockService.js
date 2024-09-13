@@ -32,10 +32,10 @@ const publishStockPrice = (symbols) => __awaiter(void 0, void 0, void 0, functio
         const url = `${STOCK_API_URL}time_series?symbol=${symbolString}&interval=1min&format=JSON&start_date=${start_date}&end_date=${end_date}%&apikey=${STOCK_API_KEY}`;
         console.log("url", url);
         const response = yield axios_1.default.get(url);
-        // console.log("response", response.data);
+        console.log("response", response.data);
         for (const symbol of symbols) {
-            //   console.log(response.data[symbol]["values"])
-            // PubSubManager.addDataToCache(symbol, response.data[symbol].values);
+            console.log(response.data[symbol]["values"]);
+            PubSubManager_1.default.addDataToCache(symbol, response.data[symbol].values);
             console.log("publishing", symbol);
             PubSubManager_1.default.publish(symbol, response.data[symbol]);
         }
@@ -45,10 +45,11 @@ const publishStockPrice = (symbols) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 node_cron_1.default.schedule("* * * * *", () => {
+    console.log("Running a task every  minute");
     publishStockPrice(stockList);
 });
 function formatAMPM(date) {
-    let hours = date.getUTCHours(); // Adjusting for timezone if needed
+    let hours = date.getUTCHours();
     const minutes = date.getUTCMinutes().toString().padStart(2, "0");
     const ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12;
