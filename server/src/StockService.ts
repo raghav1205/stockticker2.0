@@ -36,7 +36,7 @@ const publishStockPrice = async (symbols: string[]) => {
     console.error(`Error fetching stock price: ${error}`);
   }
 };
-cron.schedule("*/10 * * * *", () => {
+cron.schedule("*/40 * * * *", () => {
   console.log("Running a task every 10 minutes");
   publishStockPrice(stockList);
 });
@@ -58,4 +58,5 @@ const formattedDate = (date: Date) => {
     .padStart(2, "0")}/${date.getUTCFullYear()}`;
 };
 
-const stockList = ["AAPL","TSLA"];
+const stockList = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA'];
+

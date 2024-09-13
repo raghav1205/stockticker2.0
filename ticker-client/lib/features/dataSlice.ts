@@ -31,7 +31,7 @@ const dataSlice = createSlice({
                 
             });
 
-            // console.log(state.data);
+            console.log(state.data);
             console.log('setData');
         }
 

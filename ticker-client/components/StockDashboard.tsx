@@ -1,13 +1,14 @@
 "use client";
 import { Line } from "react-chartjs-2";
+import "chart.js/auto";
 import useSocket from "../hooks/useSocket";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
-import { StockItemData } from "../types/StockItemData";
+import { StockItemData } from "../app/types/StockItemData";
 
 const StockDashboard = () => {
   const { loading } = useSocket();
-  const data = useSelector((state: any) => state.data.data);
+  const data = useSelector((state: any) => state.data);
   console.log(data, "data");
 
   if (loading) {
@@ -58,7 +59,7 @@ const StockDashboard = () => {
             return (
               <div
                 key={key}
-                className="mx-auto grid grid-cols-3 md:grid-cols-3 font-semibold text-lg items-center justify-between px-8 py-2 rounded-md mt-5 shadow-xl dark:shadow-lg bg-[#ffff] dark:bg-[#1E1E1E] min-h-[5rem]"
+                className="mx-auto grid grid-cols-3 md:grid-cols-3 font-semibold text-lg items-center justify-between px-8 py-1  rounded-md mt-5 shadow-xl dark:shadow-lg bg-gray-300 dark:bg-[#1E1E1E] min-h-[5rem]"
               >
                 <h3>{key}</h3>
                 <span>${currentPrice}</span>
@@ -123,7 +124,6 @@ const Skeleton = () => {
             <span>$0.00</span>
             <div className="max-w-[8rem]">
               {" "}
-              <Line data={{ labels: [], datasets: [] }} options={{}} />
             </div>
           </div>
         );

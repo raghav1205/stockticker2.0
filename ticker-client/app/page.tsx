@@ -1,11 +1,13 @@
 "use client";
-import StockDashboard from "./components/StockDashboard"
+import DarkModeToggle from "../components/DarkModeToggle";
+import StockDashboard from "../components/StockDashboard"
 
 export default function Home() {
 
  
 
-  return <div>
+  return <>
+    <DarkModeToggle />
     <StockDashboard />
-  </div>
+  </>
 }
