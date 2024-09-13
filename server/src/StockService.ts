@@ -24,7 +24,7 @@ const publishStockPrice = async (symbols: string[]) => {
     const url = `${STOCK_API_URL}time_series?symbol=${symbolString}&interval=1min&format=JSON&start_date=${start_date}&end_date=${end_date}%&apikey=${STOCK_API_KEY}`;
     console.log("url", url);
     const response = await axios.get(url);
-    // console.log("response", response.data);
+    console.log("response", response.data);
 
     for (const symbol of symbols) {
     //   console.log(response.data[symbol]["values"])
@@ -36,9 +36,10 @@ const publishStockPrice = async (symbols: string[]) => {
     console.error(`Error fetching stock price: ${error}`);
   }
 };
-cron.schedule("0 * * * *", () => {
+cron.schedule("*/10 * * * *", () => {
   publishStockPrice(stockList);
 });
+
 
 function formatAMPM(date: Date) {
   let hours = date.getUTCHours(); 

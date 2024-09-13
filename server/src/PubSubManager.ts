@@ -71,7 +71,7 @@ class PubSubManager {
       }
     }
 
-    console.log("Subscriptions: ", this.subscriptions);
+    console.log("Subscription added",);
   }
 
   public publish(ticker: string, message: any): void {
@@ -83,7 +83,7 @@ class PubSubManager {
     const subscribers = this.subscriptions.get(ticker);
     if (subscribers) {
       subscribers.forEach((ws) => {
-        // console.log("Sending message to subscriber");
+        console.log("Sending message to subscriber");
         ws.send(message);
       });
     }
@@ -104,7 +104,7 @@ class PubSubManager {
     // console.log(`current cache: ${await this.redisClientCache.get(symbol)}`);
     try {
       const data = await this.redisClientCache.get(symbol);
-      // console.log(`current cache: ${data}`);
+      console.log(`current cache: ${data}`);
       if (data) {
         const parsedData = JSON.parse(data);
         const stockObj: StockObjInterface = {};

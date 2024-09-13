@@ -19,7 +19,7 @@ try {
       
       if (parsedMsg.action === 'subscribe') {
         pubSubManager.addSubscription(parsedMsg.ticker, ws);
-        // pubSubManager.sendDataFromCache(parsedMsg.ticker, ws);
+        pubSubManager.sendDataFromCache(parsedMsg.ticker, ws);
 
       }
 
