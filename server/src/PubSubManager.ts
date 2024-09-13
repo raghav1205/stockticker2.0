@@ -1,17 +1,34 @@
 import WebSocket from "ws";
 import { createClient, RedisClientType } from "redis";
 
+interface StockValue {
+  [key: string]: string;
+}
+
+interface StockObjInterface {
+  [key: string]: {
+    values: StockValue[];
+  };
+}
+
 class PubSubManager {
   private static instance: PubSubManager;
   private subscriptions: Map<string, Set<WebSocket>>; // keeps mapping of ticker to ws connections
   private redisClient: RedisClientType;
+  private redisClientCache: RedisClientType;
 
   constructor() {
     this.subscriptions = new Map<string, Set<WebSocket>>();
     // this.redisClient = createClient();
     this.redisClient = createClient({
-      url: 'redis://redis:6379'
-  });
+      url: "redis://redis:6379",
+    });
+    this.redisClientCache = createClient({
+      url: "redis://redis:6379",
+    });
+    this.redisClientCache.on("error", (error) => {
+      console.error(`Redis client error: ${error}`);
+    });
     this.redisClient.on("error", (error) => {
       console.error(`Error connecting to Redis: ${error}`);
     });
@@ -60,6 +77,34 @@ class PubSubManager {
         // console.log("Sending message to subscriber");
         ws.send(message);
       });
+    }
+  }
+  public async addDataToCache(symbol: string, data: any) {
+    console.log(`Adding data to cache for ${symbol}`);
+    try {
+      await this.redisClientCache.set(symbol, JSON.stringify(data));
+      let cachedData = await this.redisClientCache.get(symbol); // To confirm data was added
+      console.log(`current cache after adding data: ${cachedData}`);
+    } catch (error) {
+      console.error("Redis error:", error);
+    }
+  }
+
+  public async sendDataFromCache(symbol: string, ws: WebSocket) {
+    console.log(`Sending data from cache for ${symbol}`);
+    // console.log(`current cache: ${await this.redisClientCache.get(symbol)}`);
+    try {
+      const data = await this.redisClientCache.get(symbol);
+      // console.log(`current cache: ${data}`);
+      if (data) {
+        const parsedData = JSON.parse(data);
+        const stockObj: StockObjInterface = {};
+        stockObj[symbol] = parsedData;
+
+        ws.send(JSON.stringify(stockObj));
+      }
+    } catch (error) {
+      console.error("Redis error when sending data:", error);
     }
   }
 }

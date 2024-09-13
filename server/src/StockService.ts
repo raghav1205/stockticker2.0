@@ -28,7 +28,7 @@ const publishStockPrice = async (symbols: string[]) => {
 
     for (const symbol of symbols) {
     //   console.log(response.data[symbol]["values"])
-      // PubSubManager.addDataToCache(symbol, response.data[symbol].values);
+      PubSubManager.addDataToCache(symbol, response.data[symbol].values);
       console.log("publishing", symbol);
       PubSubManager.publish(symbol, response.data[symbol]);
     }
@@ -36,9 +36,8 @@ const publishStockPrice = async (symbols: string[]) => {
     console.error(`Error fetching stock price: ${error}`);
   }
 };
-
-cron.schedule("* * * * *", () => {
-  // publishStockPrice(stockList);
+cron.schedule("0 * * * *", () => {
+  publishStockPrice(stockList);
 });
 
 function formatAMPM(date: Date) {
