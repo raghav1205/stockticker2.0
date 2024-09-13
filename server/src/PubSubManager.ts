@@ -8,7 +8,10 @@ class PubSubManager {
 
   constructor() {
     this.subscriptions = new Map<string, Set<WebSocket>>();
-    this.redisClient = createClient();
+    // this.redisClient = createClient();
+    this.redisClient = createClient({
+      url: 'redis://redis:6379'
+  });
     this.redisClient.on("error", (error) => {
       console.error(`Error connecting to Redis: ${error}`);
     });

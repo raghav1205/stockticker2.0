@@ -19,7 +19,6 @@ try {
       
       if (parsedMsg.action === 'subscribe') {
         pubSubManager.addSubscription(parsedMsg.ticker, ws);
-        
       }
 
       ws.send(`You said: ${msg}`);
