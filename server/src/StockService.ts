@@ -36,8 +36,8 @@ const publishStockPrice = async (symbols: string[]) => {
     console.error(`Error fetching stock price: ${error}`);
   }
 };
-cron.schedule("*/10 * * * *", () => {
-  console.log("Running a task every 10 minutes");
+cron.schedule("* * * * *", () => {
+  console.log("Running a task every  minute");
   publishStockPrice(stockList);
 });
 
