@@ -84,6 +84,11 @@ class PubSubManager {
     if (subscribers) {
       subscribers.forEach((ws) => {
         console.log("Sending message to subscriber");
+        const parsedData = JSON.parse(message);
+        const stockObj: StockObjInterface = {};
+        stockObj[ticker] = parsedData;
+
+        ws.send(JSON.stringify(stockObj));
         ws.send(message);
       });
     }
