@@ -38,7 +38,7 @@ const publishStockPrice = async (symbols: string[]) => {
 };
 
 cron.schedule("* * * * *", () => {
-  publishStockPrice(stockList);
+  // publishStockPrice(stockList);
 });
 
 function formatAMPM(date: Date) {
