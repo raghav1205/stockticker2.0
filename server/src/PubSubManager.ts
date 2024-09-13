@@ -39,8 +39,9 @@ class PubSubManager {
     } catch (error) {
       console.error(`Error creating Redis client: ${error}`);
     }
-    
+
     this.redisClient.connect();
+    this.redisClientCache.connect();
   }
 
   public static getInstance(): PubSubManager {
