@@ -20,18 +20,26 @@ class PubSubManager {
   constructor() {
     this.subscriptions = new Map<string, Set<WebSocket>>();
     // this.redisClient = createClient();
+
     this.redisClient = createClient({
       url: "redis://redis:6379",
     });
+
     this.redisClientCache = createClient({
       url: "redis://redis:6379",
     });
-    this.redisClientCache.on("error", (error) => {
-      console.error(`Redis client error: ${error}`);
-    });
-    this.redisClient.on("error", (error) => {
-      console.error(`Error connecting to Redis: ${error}`);
-    });
+
+    try {
+      this.redisClient.on("error", (error) => {
+        console.error(`Redis client error: ${error}`);
+      });
+      this.redisClientCache.on("error", (error) => {
+        console.error(`Redis client error: ${error}`);
+      });
+    } catch (error) {
+      console.error(`Error creating Redis client: ${error}`);
+    }
+    
     this.redisClient.connect();
   }
 
