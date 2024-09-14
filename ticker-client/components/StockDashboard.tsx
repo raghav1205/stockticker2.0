@@ -9,7 +9,6 @@ import { StockItemData } from "../app/types/StockItemData";
 const StockDashboard = () => {
   const { loading } = useSocket();
   const data = useSelector((state: any) => state.data);
-  console.log(data, "data");
 
   if (loading) {
     return (
