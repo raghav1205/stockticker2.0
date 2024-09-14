@@ -25,7 +25,7 @@ const StockDashboard = () => {
       <div className="max-w-2xl mx-auto ">
         {data?.length > 0 &&
           data.map((stock: any) => {
-            console.log(stock);
+            // console.log(stock);
             const key = Object.keys(stock)[0];
             const latestData: StockItemData = stock[key][0];
             const currentPrice = parseFloat(
@@ -76,7 +76,7 @@ const StockChart = ({ data }: any) => {
     if (!data || !data.labels || data.labels.length === 0 || !data.datasets || data.datasets.length === 0) {
         return <p>Loading chart...</p>;
     }
-    console.log('Rendering StockChart', data);
+    // console.log('Rendering StockChart', data);
     const memoizedData = useMemo(() => data, [data]);
 
     const options = useMemo(() => ({

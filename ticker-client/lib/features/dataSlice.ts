@@ -20,8 +20,8 @@ const dataSlice = createSlice({
                 
             });
 
-            console.log(state.data);
-            console.log('setData');
+            // console.log(state.data);
+            // console.log('setData');
         }
 
     }

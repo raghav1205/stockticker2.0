@@ -11,7 +11,7 @@ const useSocket = () => {
   useEffect(() => {
     const ws = new WebSocket(process.env.NEXT_PUBLIC_BACKEND_URL as string);
     ws.onopen = () => {
-      console.log("Connected to server");
+      // console.log("Connected to server");
       // ws.send(JSON.stringify({ ticker: "AAPL", action: "subscribe" }));
       stockList.forEach((ticker) => {
         ws.send(JSON.stringify({ ticker, action: "subscribe" }));
@@ -20,14 +20,14 @@ const useSocket = () => {
     };
     ws.onmessage = (msg) => {
       dispatch(setData(JSON.parse(msg.data)));
-      console.log("setting data");
+      // console.log("setting data");
       // console.log(msg.data);
     };
     ws.onerror = (error) => {
-      console.log(error);
+      // console.log(error);
     };
     ws.onclose = () => {
-      console.log("Connection closed");
+      // console.log("Connection closed");
     };
     setInterval(() => {
       ws.send(JSON.stringify({ type: "keep-alive", timestamp: Date.now() }));
