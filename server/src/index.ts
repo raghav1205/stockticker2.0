@@ -4,7 +4,7 @@ import PubSubManager from "./PubSubManager";
 
 const server = http.createServer((req, res) => {
     console.log("I am connected");
-    console.log(req)
+    // console.log(req)
   res.end("I am connected");
 });
 
